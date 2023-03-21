@@ -21,9 +21,9 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
         browser.implicitly_wait(1)
         sleep(2)
         team_home = browser.find_elements(By.CSS_SELECTOR, "a.participant__participantName")[0].get_attribute(
-            "href") + "/results/"
+            "href") + "results/"
         team_away = browser.find_elements(By.CSS_SELECTOR, "a.participant__participantName")[1].get_attribute(
-            "href") + "/results/"
+            "href") + "results/"
         title = browser.find_element(By.CSS_SELECTOR, ".tournamentHeader__country").text
         print("WORKING")
         try:
@@ -158,26 +158,26 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
 
         a, p, l = count_zero(gg)
         a1, p1, l1 = count_zero(gg2)
-        print(a, p, l, sep="---")
-        print(a1, p1, l1, sep="---")
+        # print(a, p, l, sep="---")
+        # print(a1, p1, l1, sep="---")
 
         last9_t1 = dataset[:9].count(0)
         last9_t2 = dataset2[:9].count(0)
-        print(dataset[:9])
-        print(dataset2[:9])
-        print(last9_t1)
-        print(last9_t2)
+        # print(dataset[:9])
+        # print(dataset2[:9])
+        # print(last9_t1)
+        # print(last9_t2)
         last0_t1 = dataset[3:12].count(0)
         last0_t2 = dataset2[3:12].count(0)
-        print(dataset[3:12])
-        print(dataset2[3:12])
-        print("ZERO IN LAST 3 GAMES:: ", last0_t1)
-        print("ZERO IN LAST 3 GAMES:: ", last0_t2)
+        # print(dataset[3:12])
+        # print(dataset2[3:12])
+        # print("ZERO IN LAST 3 GAMES:: ", last0_t1)
+        # print("ZERO IN LAST 3 GAMES:: ", last0_t2)
 
         all_seq_team1 = round((1 - l / len(dataset)) * 100, 1)
         all_seq_team2 = round((1 - l1 / len(dataset2)) * 100, 1)
-        print("AVE PERIOD 1T:: ", all_seq_team1, f'{l}/{len(dataset)}')
-        print("AVE PERIOD 2T:: ", all_seq_team2, f'{l1}/{len(dataset2)}')
+        # print("AVE PERIOD 1T:: ", all_seq_team1, f'{l}/{len(dataset)}')
+        # print("AVE PERIOD 2T:: ", all_seq_team2, f'{l1}/{len(dataset2)}')
 
 
 
@@ -213,300 +213,708 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
                 team_conceded.append(int(scores[conceded]))
             return team_scored, team_conceded
 
-        try:
-            ''' 1st period results individual '''
 
-            team1_scored_1p_home, team1_conceded_1p_home = results(team1_home, loc="home", period="first")
-            team1_scored_1p_away, team1_conceded_1p_away = results(team1_away, loc="away", period="first")
-            team2_scored_1p_home, team2_conceded_1p_home = results(team2_home, loc="home", period="first")
-            team2_scored_1p_away, team2_conceded_1p_away = results(team2_away, loc="away", period="first")
+        ''' 1st period results individual '''
 
-            '''2nd period results individual'''
+        team1_scored_1p_home, team1_conceded_1p_home = results(team1_home, loc="home", period="first")
+        team1_scored_1p_away, team1_conceded_1p_away = results(team1_away, loc="away", period="first")
+        team2_scored_1p_home, team2_conceded_1p_home = results(team2_home, loc="home", period="first")
+        team2_scored_1p_away, team2_conceded_1p_away = results(team2_away, loc="away", period="first")
 
-            team1_scored_2p_home, team1_conceded_2p_home = results(team1_home, loc="home", period="second")
-            team1_scored_2p_away, team1_conceded_2p_away = results(team1_away, loc="away", period="second")
-            team2_scored_2p_home, team2_conceded_2p_home = results(team2_home, loc="home", period="second")
-            team2_scored_2p_away, team2_conceded_2p_away = results(team2_away, loc="away", period="second")
+        '''2nd period results individual'''
 
-            '''3rd period results individual'''
+        team1_scored_2p_home, team1_conceded_2p_home = results(team1_home, loc="home", period="second")
+        team1_scored_2p_away, team1_conceded_2p_away = results(team1_away, loc="away", period="second")
+        team2_scored_2p_home, team2_conceded_2p_home = results(team2_home, loc="home", period="second")
+        team2_scored_2p_away, team2_conceded_2p_away = results(team2_away, loc="away", period="second")
 
-            team1_scored_3p_home, team1_conceded_3p_home = results(team1_home, loc="home", period="third")
-            team1_scored_3p_away, team1_conceded_3p_away = results(team1_away, loc="away", period="third")
-            team2_scored_3p_home, team2_conceded_3p_home = results(team2_home, loc="home", period="third")
-            team2_scored_3p_away, team2_conceded_3p_away = results(team2_away, loc="away", period="third")
+        '''3rd period results individual'''
 
-            '''Fulltime results individual'''
+        team1_scored_3p_home, team1_conceded_3p_home = results(team1_home, loc="home", period="third")
+        team1_scored_3p_away, team1_conceded_3p_away = results(team1_away, loc="away", period="third")
+        team2_scored_3p_home, team2_conceded_3p_home = results(team2_home, loc="home", period="third")
+        team2_scored_3p_away, team2_conceded_3p_away = results(team2_away, loc="away", period="third")
 
-            def fulltime(period1, period2, period3):
-                return [int(x) + int(y) + int(z) for x, y, z in zip(period1, period2, period3)]
+        '''Fulltime results individual'''
 
-            team1_scored_ft_home = fulltime(team1_scored_1p_home, team1_scored_2p_home, team1_scored_3p_home)
-            team1_scored_ft_away = fulltime(team1_scored_1p_away, team1_scored_2p_away, team1_scored_3p_away)
-            team1_conceded_ft_home = fulltime(team1_conceded_1p_home, team1_conceded_2p_home, team1_conceded_3p_home)
-            team1_conceded_ft_away = fulltime(team1_conceded_1p_away, team1_conceded_2p_away, team1_conceded_3p_away)
-            team2_scored_ft_home = fulltime(team2_scored_1p_home, team2_scored_2p_home, team2_scored_3p_home)
-            team2_scored_ft_away = fulltime(team2_scored_1p_away, team2_scored_2p_away, team2_scored_3p_away)
-            team2_conceded_ft_home = fulltime(team2_conceded_1p_home, team2_conceded_2p_home, team2_conceded_3p_home)
-            team2_conceded_ft_away = fulltime(team2_conceded_1p_away, team2_conceded_2p_away, team2_conceded_3p_away)
+        def fulltime(period1, period2, period3):
+            return [int(x) + int(y) + int(z) for x, y, z in zip(period1, period2, period3)]
 
-            '''Fulltime results common'''
+        team1_scored_ft_home = fulltime(team1_scored_1p_home, team1_scored_2p_home, team1_scored_3p_home)
+        team1_scored_ft_away = fulltime(team1_scored_1p_away, team1_scored_2p_away, team1_scored_3p_away)
+        team1_conceded_ft_home = fulltime(team1_conceded_1p_home, team1_conceded_2p_home, team1_conceded_3p_home)
+        team1_conceded_ft_away = fulltime(team1_conceded_1p_away, team1_conceded_2p_away, team1_conceded_3p_away)
+        team2_scored_ft_home = fulltime(team2_scored_1p_home, team2_scored_2p_home, team2_scored_3p_home)
+        team2_scored_ft_away = fulltime(team2_scored_1p_away, team2_scored_2p_away, team2_scored_3p_away)
+        team2_conceded_ft_home = fulltime(team2_conceded_1p_home, team2_conceded_2p_home, team2_conceded_3p_home)
+        team2_conceded_ft_away = fulltime(team2_conceded_1p_away, team2_conceded_2p_away, team2_conceded_3p_away)
 
-            team1_common_ft_home = [x + y for x, y in zip(team1_scored_ft_home, team1_conceded_ft_home)]
-            team1_common_ft_away = [x + y for x, y in zip(team1_scored_ft_away, team1_conceded_ft_away)]
-            team2_common_ft_home = [x + y for x, y in zip(team2_scored_ft_home, team2_conceded_ft_home)]
-            team2_common_ft_away = [x + y for x, y in zip(team2_scored_ft_away, team2_conceded_ft_away)]
+        '''Fulltime results common'''
 
-            '''1st period common result'''
+        team1_common_ft_home = [x + y for x, y in zip(team1_scored_ft_home, team1_conceded_ft_home)]
+        team1_common_ft_away = [x + y for x, y in zip(team1_scored_ft_away, team1_conceded_ft_away)]
+        team2_common_ft_home = [x + y for x, y in zip(team2_scored_ft_home, team2_conceded_ft_home)]
+        team2_common_ft_away = [x + y for x, y in zip(team2_scored_ft_away, team2_conceded_ft_away)]
 
-            team1_common_1p_home = [x + y for x, y in zip(team1_scored_1p_home, team1_conceded_1p_home)]
-            team1_common_1p_away = [x + y for x, y in zip(team1_scored_1p_away, team1_conceded_1p_away)]
-            team2_common_1p_home = [x + y for x, y in zip(team2_scored_1p_home, team2_conceded_1p_home)]
-            team2_common_1p_away = [x + y for x, y in zip(team2_scored_1p_away, team2_conceded_1p_away)]
+        '''1st period common result'''
 
-            '''2nd period common result'''
+        team1_common_1p_home = [x + y for x, y in zip(team1_scored_1p_home, team1_conceded_1p_home)]
+        team1_common_1p_away = [x + y for x, y in zip(team1_scored_1p_away, team1_conceded_1p_away)]
+        team2_common_1p_home = [x + y for x, y in zip(team2_scored_1p_home, team2_conceded_1p_home)]
+        team2_common_1p_away = [x + y for x, y in zip(team2_scored_1p_away, team2_conceded_1p_away)]
 
-            team1_common_2p_home = [x + y for x, y in zip(team1_scored_2p_home, team1_conceded_2p_home)]
-            team1_common_2p_away = [x + y for x, y in zip(team1_scored_2p_away, team1_conceded_2p_away)]
-            team2_common_2p_home = [x + y for x, y in zip(team2_scored_2p_home, team2_conceded_2p_home)]
-            team2_common_2p_away = [x + y for x, y in zip(team2_scored_2p_away, team2_conceded_2p_away)]
+        '''2nd period common result'''
 
-            '''3rd period common result'''
+        team1_common_2p_home = [x + y for x, y in zip(team1_scored_2p_home, team1_conceded_2p_home)]
+        team1_common_2p_away = [x + y for x, y in zip(team1_scored_2p_away, team1_conceded_2p_away)]
+        team2_common_2p_home = [x + y for x, y in zip(team2_scored_2p_home, team2_conceded_2p_home)]
+        team2_common_2p_away = [x + y for x, y in zip(team2_scored_2p_away, team2_conceded_2p_away)]
 
-            team1_common_3p_home = [x + y for x, y in zip(team1_scored_3p_home, team1_conceded_3p_home)]
-            team1_common_3p_away = [x + y for x, y in zip(team1_scored_3p_away, team1_conceded_3p_away)]
-            team2_common_3p_home = [x + y for x, y in zip(team2_scored_3p_home, team2_conceded_3p_home)]
-            team2_common_3p_away = [x + y for x, y in zip(team2_scored_3p_away, team2_conceded_3p_away)]
+        '''3rd period common result'''
 
-            """1-2 peroidos indiv calc"""
+        team1_common_3p_home = [x + y for x, y in zip(team1_scored_3p_home, team1_conceded_3p_home)]
+        team1_common_3p_away = [x + y for x, y in zip(team1_scored_3p_away, team1_conceded_3p_away)]
+        team2_common_3p_home = [x + y for x, y in zip(team2_scored_3p_home, team2_conceded_3p_home)]
+        team2_common_3p_away = [x + y for x, y in zip(team2_scored_3p_away, team2_conceded_3p_away)]
 
-            team1_scored_12_home = [x + y for x, y in zip(team1_scored_1p_home, team1_scored_2p_home)]
-            team1_scored_12_away = [x + y for x, y in zip(team1_scored_1p_away, team1_scored_2p_away)]
-            team1_conceded_12_home = [x + y for x, y in zip(team1_conceded_1p_home, team1_conceded_2p_home)]
-            team1_conceded_12_away = [x + y for x, y in zip(team1_conceded_1p_away, team1_conceded_2p_away)]
-            team2_scored_12_home = [x + y for x, y in zip(team2_scored_1p_home, team2_scored_2p_home)]
-            team2_scored_12_away = [x + y for x, y in zip(team2_scored_1p_away, team2_scored_2p_away)]
-            team2_conceded_12_home = [x + y for x, y in zip(team2_conceded_1p_home, team2_conceded_2p_home)]
-            team2_conceded_12_away = [x + y for x, y in zip(team2_conceded_1p_away, team2_conceded_2p_away)]
+        """1-2 peroidos indiv calc"""
 
-            '''1-2 periods common results'''
+        team1_scored_12_home = [x + y for x, y in zip(team1_scored_1p_home, team1_scored_2p_home)]
+        team1_scored_12_away = [x + y for x, y in zip(team1_scored_1p_away, team1_scored_2p_away)]
+        team1_conceded_12_home = [x + y for x, y in zip(team1_conceded_1p_home, team1_conceded_2p_home)]
+        team1_conceded_12_away = [x + y for x, y in zip(team1_conceded_1p_away, team1_conceded_2p_away)]
+        team2_scored_12_home = [x + y for x, y in zip(team2_scored_1p_home, team2_scored_2p_home)]
+        team2_scored_12_away = [x + y for x, y in zip(team2_scored_1p_away, team2_scored_2p_away)]
+        team2_conceded_12_home = [x + y for x, y in zip(team2_conceded_1p_home, team2_conceded_2p_home)]
+        team2_conceded_12_away = [x + y for x, y in zip(team2_conceded_1p_away, team2_conceded_2p_away)]
 
-            team1_common_12_home = [x + y for x, y in zip(team1_scored_12_home, team1_conceded_12_home)]
-            team1_common_12_away = [x + y for x, y in zip(team1_scored_12_away, team1_conceded_12_away)]
-            team2_common_12_home = [x + y for x, y in zip(team2_scored_12_home, team2_conceded_12_home)]
-            team2_common_12_away = [x + y for x, y in zip(team2_scored_12_away, team2_conceded_12_away)]
+        '''1-2 periods common results'''
 
-            '''Total calculation'''
+        team1_common_12_home = [x + y for x, y in zip(team1_scored_12_home, team1_conceded_12_home)]
+        team1_common_12_away = [x + y for x, y in zip(team1_scored_12_away, team1_conceded_12_away)]
+        team2_common_12_home = [x + y for x, y in zip(team2_scored_12_home, team2_conceded_12_home)]
+        team2_common_12_away = [x + y for x, y in zip(team2_scored_12_away, team2_conceded_12_away)]
+
+        '''Total calculation'''
+
+        match_matrix = [team1_scored_1p_home,
+                        team1_conceded_1p_home,
+                        team1_scored_2p_home,
+                        team1_conceded_2p_home]
+
+        cases_home_t1 = len(team1_scored_1p_home)
+        cases_away_t1 = len(team1_scored_1p_away)
+        cases_home_t2 = len(team2_scored_1p_home)
+        cases_away_t2 = len(team2_scored_1p_away)
+
+        def catcher00(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] + b[i] == 0:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 0-0::', c[i], ':', d[i])
+            # print()
+            return collector
+
+        '''1st period ended with 0-0'''
+
+        t1_home00 = catcher00(team1_scored_1p_home,
+                              team1_conceded_1p_home,
+                              team1_scored_2p_home,
+                              team1_conceded_2p_home, cases_home_t1)
+
+        t1_away00 = catcher00(team1_scored_1p_away,
+                              team1_conceded_1p_away,
+                              team1_scored_2p_away,
+                              team1_conceded_2p_away, cases_away_t1)
+
+        t2_home00 = catcher00(team2_scored_1p_home,
+                              team2_conceded_1p_home,
+                              team2_scored_2p_home,
+                              team2_conceded_2p_home, cases_home_t2)
+
+        t2_away00 = catcher00(team2_scored_1p_away,
+                              team2_conceded_1p_away,
+                              team2_scored_2p_away,
+                              team2_conceded_2p_away, cases_away_t2)
+
+        def catcher10(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 1 and b[i] == 0:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 1-0::',c[i],':',d[i])
+            # print()
+
+            return collector
+
+        def catcher01(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 0 and b[i] == 1:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 0-1::', c[i], ':', d[i])
+            # print()
+            return collector
+
+        '''home team win in persent match 1 period with 1-0 scores'''
+
+        t1_win10 = catcher10(team1_scored_1p_home,
+                             team1_conceded_1p_home,
+                             team1_scored_2p_home,
+                             team1_conceded_2p_home, cases_home_t1)
+
+        t1_win01 = catcher01(team1_scored_1p_away,
+                             team1_conceded_1p_away,
+                             team1_scored_2p_away,
+                             team1_conceded_2p_away, cases_away_t1)
+
+        t2_lose10 = catcher01(team2_scored_1p_home,
+                              team2_conceded_1p_home,
+                              team2_scored_2p_home,
+                              team2_conceded_2p_home, cases_home_t2)
+
+        t2_lose01 = catcher10(team2_scored_1p_away,
+                              team2_conceded_1p_away,
+                              team2_scored_2p_away,
+                              team2_conceded_2p_away, cases_away_t2)
+
+        '''away team win in persent match 1 period with 0-1 scores'''
+
+        t2_win10 = catcher10(team2_scored_1p_home,
+                             team2_conceded_1p_home,
+                             team2_scored_2p_home,
+                             team2_conceded_2p_home, cases_home_t2)
+
+        t2_win01 = catcher01(team2_scored_1p_away,
+                             team2_conceded_1p_away,
+                             team2_scored_2p_away,
+                             team2_conceded_2p_away, cases_away_t2)
+
+        t1_lose10 = catcher01(team1_scored_1p_home,
+                              team1_conceded_1p_home,
+                              team1_scored_2p_home,
+                              team1_conceded_2p_home, cases_home_t1)
+
+        t1_lose01 = catcher10(team1_scored_1p_away,
+                              team1_conceded_1p_away,
+                              team1_scored_2p_away,
+                              team1_conceded_2p_away, cases_away_t1)
+
+        '''1st period ended with 1-1'''
+
+        def catcher11(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 1 and b[i] == 1:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 1-1::', c[i], ':', d[i])
+            # print()
+            return collector
+
+        t1_home11 = catcher11(team1_scored_1p_home,
+                              team1_conceded_1p_home,
+                              team1_scored_2p_home,
+                              team1_conceded_2p_home, cases_home_t1)
+
+        t1_away11 = catcher11(team1_scored_1p_away,
+                              team1_conceded_1p_away,
+                              team1_scored_2p_away,
+                              team1_conceded_2p_away, cases_away_t1)
+
+        t2_home11 = catcher11(team2_scored_1p_home,
+                              team2_conceded_1p_home,
+                              team2_scored_2p_home,
+                              team2_conceded_2p_home, cases_home_t2)
+
+        t2_away11 = catcher11(team2_scored_1p_away,
+                              team2_conceded_1p_away,
+                              team2_scored_2p_away,
+                              team2_conceded_2p_away, cases_away_t2)
+
+        ''' first period scored 2-0 or 0-2'''
+
+        def catcher20(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 2 and b[i] == 0:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 2-0::',c[i],':',d[i])
+            # print()
+
+            return collector
+
+        def catcher02(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 0 and b[i] == 2:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 0-2::', c[i], ':', d[i])
+            # print()
+
+            return collector
+
+        '''home team win in persent match 1 period with 2-0 scores'''
+
+        t1_win20 = catcher20(team1_scored_1p_home,
+                             team1_conceded_1p_home,
+                             team1_scored_2p_home,
+                             team1_conceded_2p_home, cases_home_t1)
+
+        t1_win02 = catcher02(team1_scored_1p_away,
+                             team1_conceded_1p_away,
+                             team1_scored_2p_away,
+                             team1_conceded_2p_away, cases_away_t1)
+
+        t2_lose20 = catcher02(team2_scored_1p_home,
+                              team2_conceded_1p_home,
+                              team2_scored_2p_home,
+                              team2_conceded_2p_home, cases_home_t2)
+
+        t2_lose02 = catcher20(team2_scored_1p_away,
+                              team2_conceded_1p_away,
+                              team2_scored_2p_away,
+                              team2_conceded_2p_away, cases_away_t2)
+
+        '''away team win in persent match 1 period with 0-2 scores'''
+
+        t2_win20 = catcher20(team2_scored_1p_home,
+                             team2_conceded_1p_home,
+                             team2_scored_2p_home,
+                             team2_conceded_2p_home, cases_home_t2)
+
+        t2_win02 = catcher02(team2_scored_1p_away,
+                             team2_conceded_1p_away,
+                             team2_scored_2p_away,
+                             team2_conceded_2p_away, cases_away_t2)
+
+        t1_lose20 = catcher02(team1_scored_1p_home,
+                              team1_conceded_1p_home,
+                              team1_scored_2p_home,
+                              team1_conceded_2p_home, cases_home_t1)
+
+        t1_lose02 = catcher20(team1_scored_1p_away,
+                              team1_conceded_1p_away,
+                              team1_scored_2p_away,
+                              team1_conceded_2p_away, cases_away_t1)
+
+        ''' first period scored 2-1 or 1-2'''
+
+        def catcher21(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 2 and b[i] == 1:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 2-1::',c[i],':',d[i])
+            # print()
+
+            return collector
+
+        def catcher12(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 1 and b[i] == 2:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 1-2::', c[i], ':', d[i])
+            # print()
+
+            return collector
+
+        '''home team win in persent match 1 period with 2-1 scores'''
+
+        t1_win21 = catcher21(team1_scored_1p_home,
+                             team1_conceded_1p_home,
+                             team1_scored_2p_home,
+                             team1_conceded_2p_home, cases_home_t1)
+
+        t1_win12 = catcher12(team1_scored_1p_away,
+                             team1_conceded_1p_away,
+                             team1_scored_2p_away,
+                             team1_conceded_2p_away, cases_away_t1)
+
+        t2_lose21 = catcher12(team2_scored_1p_home,
+                              team2_conceded_1p_home,
+                              team2_scored_2p_home,
+                              team2_conceded_2p_home, cases_home_t2)
+
+        t2_lose12 = catcher21(team2_scored_1p_away,
+                              team2_conceded_1p_away,
+                              team2_scored_2p_away,
+                              team2_conceded_2p_away, cases_away_t2)
+
+        '''away team win in persent match 1 period with 1-2 scores'''
+
+        t2_win21 = catcher21(team2_scored_1p_home,
+                             team2_conceded_1p_home,
+                             team2_scored_2p_home,
+                             team2_conceded_2p_home, cases_home_t2)
+
+        t2_win12 = catcher12(team2_scored_1p_away,
+                             team2_conceded_1p_away,
+                             team2_scored_2p_away,
+                             team2_conceded_2p_away, cases_away_t2)
+
+        t1_lose21 = catcher12(team1_scored_1p_home,
+                              team1_conceded_1p_home,
+                              team1_scored_2p_home,
+                              team1_conceded_2p_home, cases_home_t1)
+
+        t1_lose12 = catcher21(team1_scored_1p_away,
+                              team1_conceded_1p_away,
+                              team1_scored_2p_away,
+                              team1_conceded_2p_away, cases_away_t1)
+
+        ''' first period scored 3-0 or 0-3'''
+
+        def catcher30(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 3 and b[i] == 0:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 3-0::',c[i],':',d[i])
+            # print()
+
+            return collector
+
+        def catcher03(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] == 0 and b[i] == 3:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 0-3::', c[i], ':', d[i])
+            # print()
+
+            return collector
+
+        '''home team win in persent match 1 period with 3-0 scores'''
+
+        t1_win30 = catcher30(team1_scored_1p_home,
+                             team1_conceded_1p_home,
+                             team1_scored_2p_home,
+                             team1_conceded_2p_home, cases_home_t1)
+
+        t1_win03 = catcher03(team1_scored_1p_away,
+                             team1_conceded_1p_away,
+                             team1_scored_2p_away,
+                             team1_conceded_2p_away, cases_away_t1)
+
+        t2_lose30 = catcher03(team2_scored_1p_home,
+                              team2_conceded_1p_home,
+                              team2_scored_2p_home,
+                              team2_conceded_2p_home, cases_home_t2)
+
+        t2_lose03 = catcher30(team2_scored_1p_away,
+                              team2_conceded_1p_away,
+                              team2_scored_2p_away,
+                              team2_conceded_2p_away, cases_away_t2)
+
+        '''away team win in persent match 1 period with 0-3 scores'''
+
+        t2_win30 = catcher30(team2_scored_1p_home,
+                             team2_conceded_1p_home,
+                             team2_scored_2p_home,
+                             team2_conceded_2p_home, cases_home_t2)
+
+        t2_win03 = catcher03(team2_scored_1p_away,
+                             team2_conceded_1p_away,
+                             team2_scored_2p_away,
+                             team2_conceded_2p_away, cases_away_t2)
+
+        t1_lose30 = catcher03(team1_scored_1p_home,
+                              team1_conceded_1p_home,
+                              team1_scored_2p_home,
+                              team1_conceded_2p_home, cases_home_t1)
+
+        t1_lose03 = catcher30(team1_scored_1p_away,
+                              team1_conceded_1p_away,
+                              team1_scored_2p_away,
+                              team1_conceded_2p_away, cases_away_t1)
+
+        '''first period scored more then 3'''
+
+        def catcher_more(a, b, c, d, long):
+            collector = []
+            for i in range(long):
+                if a[i] + b[i] > 3:
+                    collector.append(c[i] + d[i])
+            #         print('2nd period after 3++++::', c[i], ':', d[i])
+            # print()
+            return collector
+
+        t1_homeMo = catcher_more(team1_scored_1p_home,
+                                 team1_conceded_1p_home,
+                                 team1_scored_2p_home,
+                                 team1_conceded_2p_home, cases_home_t1)
+
+        t1_awayMo = catcher_more(team1_scored_1p_away,
+                                 team1_conceded_1p_away,
+                                 team1_scored_2p_away,
+                                 team1_conceded_2p_away, cases_away_t1)
+
+        t2_homeMo = catcher_more(team2_scored_1p_home,
+                                 team2_conceded_1p_home,
+                                 team2_scored_2p_home,
+                                 team2_conceded_2p_home, cases_home_t2)
+
+        t2_awayMo = catcher_more(team2_scored_1p_away,
+                                 team2_conceded_1p_away,
+                                 team2_scored_2p_away,
+                                 team2_conceded_2p_away, cases_away_t2)
+
+        def counter(data):
+            count = 0
+            null, one, two, more = 0, 0, 0, 0
+            for i in data:
+                count += 1
+                if i == 0:
+                    null += 1
+                if i == 1:
+                    one += 1
+                if i == 2:
+                    two += 1
+                if i > 2:
+                    more += 1
+            return null, one, two, more, count
+
+        per2_00 = counter(t1_home00 + t1_away00 + t2_home00 + t2_away00)
+        per2_10 = counter(t1_win10 + t1_win01 + t2_lose01 + t2_lose10)
+        per2_01 = counter(t2_win01 + t2_win10 + t1_lose10 + t1_lose01)
+        per2_11 = counter(t1_home11 + t1_away11 + t2_home11 + t2_away11)
+        per2_20 = counter(t1_win20 + t1_win02 + t2_lose02 + t2_lose20)
+        per2_02 = counter(t2_win02 + t2_win20 + t1_lose20 + t1_lose02)
+        per2_21 = counter(t1_win21 + t1_win12 + t2_lose12 + t2_lose21)
+        per2_12 = counter(t2_win12 + t2_win21 + t1_lose21 + t1_lose12)
+        per2_30 = counter(t1_win30 + t1_win03 + t2_lose03 + t2_lose30)
+        per2_03 = counter(t2_win03 + t2_win30 + t1_lose30 + t1_lose03)
+        per2_Mo = counter(t1_homeMo + t1_awayMo + t2_homeMo + t2_awayMo)
+
+        def try_it_over(data, value):
+            long = data[4]
+
+            if data[0] == 0 and long >= value:
+                return 1
+            if data[0] != 0 and long / data[0] >= 12:
+                return 1
+            if long >= 8 and data[0] == 0 and data[1] <= 1:
+                return 2
+
+        print('TRY IT OVER 0-0', try_it_over(per2_00,10))
+        print('TRY IT OVER 1-0', try_it_over(per2_10, 10))
+        print('TRY IT OVER 0-1', try_it_over(per2_01, 10))
+        print('TRY IT OVER 1-1', try_it_over(per2_11, 10))
+        print('TRY IT OVER 2-1', try_it_over(per2_21, 10))
+        print('TRY IT OVER 1-2', try_it_over(per2_12, 10))
+        print('TRY IT OVER 3-0', try_it_over(per2_30, 10))
+        print('TRY IT OVER 0-3', try_it_over(per2_03, 10))
+        print('TRY IT OVER 3++', try_it_over(per2_Mo, 10))
 
 
 
 
 
-
-            def calc(list):
-                matches = 0
-                zero, one, two, three, four, more = 0, 0, 0, 0, 0, 0
-                for i in list:
-                    matches += 1
-                    if int(i) == 0:
-                        zero += 1
-                    elif int(i) == 1:
-                        one += 1
-                    elif int(i) == 2:
-                        two += 1
-                    elif int(i) == 3:
-                        three += 1
-                    elif int(i) == 4:
-                        four += 1
-                    else:
-                        more += 1
-                return zero, one, two, three, four, more, matches
-
-
-            score1, score2 = calc(team1_common_1p_home)[0], calc(team1_common_1p_away)[0]
-            score3, score4 = calc(team2_common_1p_home)[0], calc(team2_common_1p_away)[0]
-
-            score5, score6 = calc(team1_common_2p_home)[0], calc(team1_common_2p_away)[0]
-            score7, score8 = calc(team2_common_2p_home)[0], calc(team2_common_2p_away)[0]
-
-            score9 ,score10 = calc(team1_common_3p_home)[0], calc(team1_common_3p_away)[0]
-            score11,score12 = calc(team2_common_3p_home)[0], calc(team2_common_3p_away)[0]
-
-            nice = [0, 1]
-
-            '''Printer'''
+        def calc(list):
+            matches = 0
+            zero, one, two, three, four, more = 0, 0, 0, 0, 0, 0
+            for i in list:
+                matches += 1
+                if int(i) == 0:
+                    zero += 1
+                elif int(i) == 1:
+                    one += 1
+                elif int(i) == 2:
+                    two += 1
+                elif int(i) == 3:
+                    three += 1
+                elif int(i) == 4:
+                    four += 1
+                else:
+                    more += 1
+            return zero, one, two, three, four, more, matches
 
 
-            print("<<<<<    FULLTIME   >>>>>")
-            print("SCORED   FULLTIME  HOME: ", team1_scored_ft_home, calc(team1_scored_ft_home))
-            if calc(team1_scored_ft_home)[0] == 0:
-                print("$$$")
-            print("CONCEDED FULLTIME  HOME: ", team1_conceded_ft_home, calc(team1_conceded_ft_home))
-            if calc(team1_conceded_ft_home)[0] == 0:
-                print("$$$")
-            print("SCORED   FULLTIME  AWAY: ", team1_scored_ft_away, calc(team1_scored_ft_away))
-            if calc(team1_scored_ft_away)[0] == 0:
-                print("$$$")
-            print("CONCEDED FULLTIME  AWAY: ", team1_conceded_ft_away, calc(team1_conceded_ft_away))
-            if calc(team1_conceded_ft_away)[0] == 0:
-                print("$$$")
-            print("SCORED    COMMON   HOME: ", team1_common_ft_home, calc(team1_common_ft_home))
-            if calc(team1_common_ft_home)[0] == 0:
-                print("$$$")
-            print("SCORED    COMMON   AWAY: ", team1_common_ft_away, calc(team1_common_ft_away))
-            if calc(team1_common_ft_away)[0] == 0:
-                print("$$$")
-            print("*" * 40)
-            print("<<<<<AWAY TEAM RESULTS>>>>>", away_team_name)
+        score1, score2 = calc(team1_common_1p_home)[0], calc(team1_common_1p_away)[0]
+        score3, score4 = calc(team2_common_1p_home)[0], calc(team2_common_1p_away)[0]
 
-            print("<<<<<    FULLTIME   >>>>>")
-            print("SCORED   FULLTIME  HOME: ", team2_scored_ft_home, calc(team2_scored_ft_home))
-            if calc(team2_scored_ft_home)[0] == 0:
-                print("$$$")
-            print("CONCEDED FULLTIME  HOME: ", team2_conceded_ft_home, calc(team2_conceded_ft_home))
-            if calc(team2_conceded_ft_home)[0] == 0:
-                print("$$$")
-            print("SCORED   FULLTIME  AWAY: ", team2_scored_ft_away, calc(team2_scored_ft_away))
-            if calc(team2_scored_ft_away)[0] == 0:
-                print("$$$")
-            print("CONCEDED FULLTIME  AWAY: ", team2_conceded_ft_away, calc(team2_conceded_ft_away))
-            if calc(team2_conceded_ft_away)[0] == 0:
-                print("$$$")
-            print("SCORED    COMMON   HOME: ", team2_common_ft_home, calc(team2_common_ft_home))
-            if calc(team2_common_ft_home)[0] == 0:
-                print("$$$")
-            print("SCORED    COMMON   AWAY: ", team2_common_ft_away, calc(team2_common_ft_away))
-            if calc(team2_common_ft_away)[0] == 0:
-                print("$$$")
+        score5, score6 = calc(team1_common_2p_home)[0], calc(team1_common_2p_away)[0]
+        score7, score8 = calc(team2_common_2p_home)[0], calc(team2_common_2p_away)[0]
+
+        score9 ,score10 = calc(team1_common_3p_home)[0], calc(team1_common_3p_away)[0]
+        score11,score12 = calc(team2_common_3p_home)[0], calc(team2_common_3p_away)[0]
+
+        nice = [0, 1]
+
+        '''Printer'''
 
 
-            """    FORMING TO SEND MESSAGE   """
-            current_score = f"{score_one}:{score_two}"
+        # print("<<<<<    FULLTIME   >>>>>")
+        # print("SCORED   FULLTIME  HOME: ", team1_scored_ft_home, calc(team1_scored_ft_home))
+        # if calc(team1_scored_ft_home)[0] == 0:
+        #     print("$$$")
+        # print("CONCEDED FULLTIME  HOME: ", team1_conceded_ft_home, calc(team1_conceded_ft_home))
+        # if calc(team1_conceded_ft_home)[0] == 0:
+        #     print("$$$")
+        # print("SCORED   FULLTIME  AWAY: ", team1_scored_ft_away, calc(team1_scored_ft_away))
+        # if calc(team1_scored_ft_away)[0] == 0:
+        #     print("$$$")
+        # print("CONCEDED FULLTIME  AWAY: ", team1_conceded_ft_away, calc(team1_conceded_ft_away))
+        # if calc(team1_conceded_ft_away)[0] == 0:
+        #     print("$$$")
+        # print("SCORED    COMMON   HOME: ", team1_common_ft_home, calc(team1_common_ft_home))
+        # if calc(team1_common_ft_home)[0] == 0:
+        #     print("$$$")
+        # print("SCORED    COMMON   AWAY: ", team1_common_ft_away, calc(team1_common_ft_away))
+        # if calc(team1_common_ft_away)[0] == 0:
+        #     print("$$$")
+        # print("*" * 40)
+        # print("<<<<<AWAY TEAM RESULTS>>>>>", away_team_name)
+        #
+        # print("<<<<<    FULLTIME   >>>>>")
+        # print("SCORED   FULLTIME  HOME: ", team2_scored_ft_home, calc(team2_scored_ft_home))
+        # if calc(team2_scored_ft_home)[0] == 0:
+        #     print("$$$")
+        # print("CONCEDED FULLTIME  HOME: ", team2_conceded_ft_home, calc(team2_conceded_ft_home))
+        # if calc(team2_conceded_ft_home)[0] == 0:
+        #     print("$$$")
+        # print("SCORED   FULLTIME  AWAY: ", team2_scored_ft_away, calc(team2_scored_ft_away))
+        # if calc(team2_scored_ft_away)[0] == 0:
+        #     print("$$$")
+        # print("CONCEDED FULLTIME  AWAY: ", team2_conceded_ft_away, calc(team2_conceded_ft_away))
+        # if calc(team2_conceded_ft_away)[0] == 0:
+        #     print("$$$")
+        # print("SCORED    COMMON   HOME: ", team2_common_ft_home, calc(team2_common_ft_home))
+        # if calc(team2_common_ft_home)[0] == 0:
+        #     print("$$$")
+        # print("SCORED    COMMON   AWAY: ", team2_common_ft_away, calc(team2_common_ft_away))
+        # if calc(team2_common_ft_away)[0] == 0:
+        #     print("$$$")
 
 
-            if period == 1 and checker == 1:
-                print("FIRST PERIOD WILL BE SCANNED")
-                print("<<<<<HOME TEAM RESULTS>>>>>", home_team_name)
-                print("<<<<<    1ST PERIOD   >>>>>")
-                print("1ST PERIOD SCORED  HOME: ",team1_scored_1p_home,calc(team1_scored_1p_home))
-                print("1ST PERIOD CONCED. HOME: ",team1_conceded_1p_home,calc(team1_conceded_1p_home))
-                print("1ST PERIOD SCORED  AWAY: ",team1_scored_1p_away,calc(team1_scored_1p_away))
-                print("1ST PERIOD CONCED. AWAY: ",team1_conceded_1p_away,calc(team1_conceded_1p_away))
-                print("1ST PERIOD COMMON HOME : ",team1_common_1p_home,calc(team1_common_1p_home))
-                print("1ST PERIOD COMMON AWAY : ",team1_common_1p_away,calc(team1_common_1p_away))
-                print()
-                print("<<<<<AWAY TEAM RESULTS>>>>>")
-                print("<<<<<    1ST PERIOD   >>>>>")
-                print("1ST PERIOD SCORED  HOME: ", team2_scored_1p_home,calc(team2_scored_1p_home))
-                print("1ST PERIOD CONCED. HOME: ", team2_conceded_1p_home,calc(team2_conceded_1p_home))
-                print("1ST PERIOD SCORED  AWAY: ", team2_scored_1p_away,calc(team2_scored_1p_away))
-                print("1ST PERIOD CONCED. AWAY: ", team2_conceded_1p_away,calc(team2_conceded_1p_away))
-                print("1ST PERIOD COMMON HOME : ", team2_common_1p_home,calc(team2_common_1p_home))
-                print("1ST PERIOD COMMON AWAY : ", team2_common_1p_away,calc(team2_common_1p_away))
+        """    FORMING TO SEND MESSAGE   """
+        current_score = f"{score_one}:{score_two}"
 
-                scorage1 = round((1 - (calc(team1_common_1p_home)[0] + calc(team1_common_1p_away)[0])/(calc(team1_common_1p_home)[6] + calc(team1_common_1p_away)[6])) * 100,1)
-                scorage2 = round((1 - (calc(team2_common_1p_home)[0] + calc(team2_common_1p_away)[0])/(calc(team2_common_1p_home)[6] + calc(team2_common_1p_away)[6])) * 100,1)
-                print("OK -1")
+
+        if period == 1 and checker == 1:
+            # print("FIRST PERIOD WILL BE SCANNED")
+            # print("<<<<<HOME TEAM RESULTS>>>>>", home_team_name)
+            # print("<<<<<    1ST PERIOD   >>>>>")
+            # print("1ST PERIOD SCORED  HOME: ",team1_scored_1p_home,calc(team1_scored_1p_home))
+            # print("1ST PERIOD CONCED. HOME: ",team1_conceded_1p_home,calc(team1_conceded_1p_home))
+            # print("1ST PERIOD SCORED  AWAY: ",team1_scored_1p_away,calc(team1_scored_1p_away))
+            # print("1ST PERIOD CONCED. AWAY: ",team1_conceded_1p_away,calc(team1_conceded_1p_away))
+            # print("1ST PERIOD COMMON HOME : ",team1_common_1p_home,calc(team1_common_1p_home))
+            # print("1ST PERIOD COMMON AWAY : ",team1_common_1p_away,calc(team1_common_1p_away))
+            # print()
+            # print("<<<<<AWAY TEAM RESULTS>>>>>")
+            # print("<<<<<    1ST PERIOD   >>>>>")
+            # print("1ST PERIOD SCORED  HOME: ", team2_scored_1p_home,calc(team2_scored_1p_home))
+            # print("1ST PERIOD CONCED. HOME: ", team2_conceded_1p_home,calc(team2_conceded_1p_home))
+            # print("1ST PERIOD SCORED  AWAY: ", team2_scored_1p_away,calc(team2_scored_1p_away))
+            # print("1ST PERIOD CONCED. AWAY: ", team2_conceded_1p_away,calc(team2_conceded_1p_away))
+            # print("1ST PERIOD COMMON HOME : ", team2_common_1p_home,calc(team2_common_1p_home))
+            # print("1ST PERIOD COMMON AWAY : ", team2_common_1p_away,calc(team2_common_1p_away))
+
+            scorage1 = round((1 - (calc(team1_common_1p_home)[0] + calc(team1_common_1p_away)[0])/(calc(team1_common_1p_home)[6] + calc(team1_common_1p_away)[6])) * 100,1)
+            scorage2 = round((1 - (calc(team2_common_1p_home)[0] + calc(team2_common_1p_away)[0])/(calc(team2_common_1p_home)[6] + calc(team2_common_1p_away)[6])) * 100,1)
+            print("OK -1")
+            mark = f'{scorage1}% + {scorage2}%'
+            # depth = f'Depth::{len(score1+score2)}+{len(score3+score4)}'
+            print("OK -2")
+
+            team1_scored_1 = round((1 - (calc(team1_scored_1p_home)[0] + calc(team1_scored_1p_away)[0])/(calc(team1_scored_1p_home)[6] + calc(team1_scored_1p_away)[6])) * 100,1)
+            team1_conceded_1 = round((1 - (calc(team1_conceded_1p_home)[0] + calc(team1_conceded_1p_away)[0]) / (
+                        calc(team1_conceded_1p_home)[6] + calc(team1_conceded_1p_away)[6])) * 100, 1)
+            team2_scored_1 = round((1 - (calc(team2_scored_1p_home)[0] + calc(team2_scored_1p_away)[0])/(calc(team2_scored_1p_home)[6] + calc(team2_scored_1p_away)[6])) * 100,1)
+            team2_conceded_1 = round((1 - (calc(team2_conceded_1p_home)[0] + calc(team2_conceded_1p_away)[0]) / (
+                        calc(team2_conceded_1p_home)[6] + calc(team2_conceded_1p_away)[6])) * 100, 1)
+            print("OK -3")
+            mark_team1 = f"{team1_scored_1}% to {team1_conceded_1}%"
+            mark_team2 = f"{team2_scored_1}% to {team2_conceded_1}%"
+            last = f'{last_2p_t1}-{last_2p_t2}@@@{last_3p_t1}-{last_3p_t2}'
+
+            if (scorage1>=87 and scorage2>=87) or scorage1 > 96 or scorage2 > 96:
+                data = (title, current_score, *home_team_name,mark_team1, *away_team_name,mark_team2, "1ST PERIOD GOAL",mark,info,"Last::",last)
+                bet_siska(data)
+                print("FIRST PERIOD SCANNED")
+                if (last_3p_t1 == 0 or last_3p_t2 == 0) and p + p1 > 150:
+                    data = (title, current_score, *home_team_name,mark_team1, *away_team_name,mark_team2, "1ST PERIOD GOAL",mark,info,"LAST 3 PERIODS WAS 0")
+                    bet_siska(data)
+                    print("FIRST PERIOD SCANNED according last 3 periods")
+
+                if last_3p_t1+last_2p_t1 == 0 or last_3p_t2+last_2p_t2 ==0 :
+                    data = (title, current_score, *home_team_name, mark_team1, *away_team_name, mark_team2,
+                                "1ST PERIOD GOAL", mark, info, "LAST 3 and 2 PERIODS WAS 0")
+                    bet_siska(data)
+                    print("FIRST PERIOD SCANNED according last 3 and 2 periods")
+
+
+            else:
+                print("1st period insufficient percentage")
+
+        if all_seq_team1 + all_seq_team2 > 182:
+            if last0_t1+last0_t2 >=1:
+                scorage1 = round((1 - (calc(team1_common_1p_home)[0] + calc(team1_common_1p_away)[0]) / (
+                            calc(team1_common_1p_home)[6] + calc(team1_common_1p_away)[6])) * 100, 1)
+                scorage2 = round((1 - (calc(team2_common_1p_home)[0] + calc(team2_common_1p_away)[0]) / (
+                            calc(team2_common_1p_home)[6] + calc(team2_common_1p_away)[6])) * 100, 1)
                 mark = f'{scorage1}% + {scorage2}%'
-                # depth = f'Depth::{len(score1+score2)}+{len(score3+score4)}'
-                print("OK -2")
-
-                team1_scored_1 = round((1 - (calc(team1_scored_1p_home)[0] + calc(team1_scored_1p_away)[0])/(calc(team1_scored_1p_home)[6] + calc(team1_scored_1p_away)[6])) * 100,1)
-                team1_conceded_1 = round((1 - (calc(team1_conceded_1p_home)[0] + calc(team1_conceded_1p_away)[0]) / (
-                            calc(team1_conceded_1p_home)[6] + calc(team1_conceded_1p_away)[6])) * 100, 1)
-                team2_scored_1 = round((1 - (calc(team2_scored_1p_home)[0] + calc(team2_scored_1p_away)[0])/(calc(team2_scored_1p_home)[6] + calc(team2_scored_1p_away)[6])) * 100,1)
-                team2_conceded_1 = round((1 - (calc(team2_conceded_1p_home)[0] + calc(team2_conceded_1p_away)[0]) / (
-                            calc(team2_conceded_1p_home)[6] + calc(team2_conceded_1p_away)[6])) * 100, 1)
-                print("OK -3")
-                mark_team1 = f"{team1_scored_1}% to {team1_conceded_1}%"
-                mark_team2 = f"{team2_scored_1}% to {team2_conceded_1}%"
-                last = f'{last_2p_t1}-{last_2p_t2}@@@{last_3p_t1}-{last_3p_t2}'
-
-                if (scorage1>=87 and scorage2>=87) or scorage1 > 96 or scorage2 > 96:
-                    data = (title, current_score, *home_team_name,mark_team1, *away_team_name,mark_team2, "1ST PERIOD GOAL",mark,info,"Last::",last)
-                    bet_siska(data)
-                    print("FIRST PERIOD SCANNED")
-                    if (last_3p_t1 == 0 or last_3p_t2 == 0) and p + p1 > 150:
-                        data = (title, current_score, *home_team_name,mark_team1, *away_team_name,mark_team2, "1ST PERIOD GOAL",mark,info,"LAST 3 PERIODS WAS 0")
-                        bet_siska(data)
-                        print("FIRST PERIOD SCANNED according last 3 periods")
-
-                    if last_3p_t1+last_2p_t1 == 0 or last_3p_t2+last_2p_t2 ==0 :
-                        data = (title, current_score, *home_team_name, mark_team1, *away_team_name, mark_team2,
-                                    "1ST PERIOD GOAL", mark, info, "LAST 3 and 2 PERIODS WAS 0")
-                        bet_siska(data)
-                        print("FIRST PERIOD SCANNED according last 3 and 2 periods")
+                msg1 = f'AVE::  {all_seq_team1} >>> {all_seq_team2}'
+                msg2 = f'LAST 3 GAMES:: {last0_t1} >>> {last0_t2}'
+                msg3 = f'{l}/{len(dataset)} >>> {l1}/{len(dataset2)}'
+                data = ("<AVEREAGE>",title,*home_team_name,*away_team_name,msg1,msg2,msg3,mark)
+                bet_siska(data)
 
 
-                else:
-                    print("1st period insufficient percentage")
 
-            if all_seq_team1 + all_seq_team2 > 182:
-                if last0_t1+last0_t2 >=1:
-                    scorage1 = round((1 - (calc(team1_common_1p_home)[0] + calc(team1_common_1p_away)[0]) / (
-                                calc(team1_common_1p_home)[6] + calc(team1_common_1p_away)[6])) * 100, 1)
-                    scorage2 = round((1 - (calc(team2_common_1p_home)[0] + calc(team2_common_1p_away)[0]) / (
-                                calc(team2_common_1p_home)[6] + calc(team2_common_1p_away)[6])) * 100, 1)
-                    mark = f'{scorage1}% + {scorage2}%'
-                    msg1 = f'AVE::  {all_seq_team1} >>> {all_seq_team2}'
-                    msg2 = f'LAST 3 GAMES:: {last0_t1} >>> {last0_t2}'
-                    msg3 = f'{l}/{len(dataset)} >>> {l1}/{len(dataset2)}'
-                    data = ("<AVEREAGE>",title,*home_team_name,*away_team_name,msg1,msg2,msg3,mark)
+        mark2 = f'AVE::  {all_seq_team1} >>> {all_seq_team2}'
+        if checker == 2 :
+            if score_one == 0 and score_two == 0:
+                if try_it_over(per2_00,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_00}' )
                     bet_siska(data)
 
+            if score_one == 1 and score_two == 0:
+                if try_it_over(per2_10,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_10}' )
+                    bet_siska(data)
+
+            if score_one == 0 and score_two == 1:
+                if try_it_over(per2_01,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_01}' )
+                    bet_siska(data)
+
+            if score_one == 1 and score_two == 1:
+                if try_it_over(per2_11,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_11}' )
+                    bet_siska(data)
+
+            if score_one == 2 and score_two == 1:
+                if try_it_over(per2_21,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_21}' )
+                    bet_siska(data)
+
+            if score_one == 1 and score_two == 2:
+                if try_it_over(per2_12,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_12}' )
+                    bet_siska(data)
+
+            if score_one == 3 and score_two == 0:
+                if try_it_over(per2_30,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_30}' )
+                    bet_siska(data)
+
+            if score_one == 0 and score_two == 3:
+                if try_it_over(per2_03,8) == 1:
+                    data = (title, *home_team_name, *away_team_name,current_score, 'AVERAGE', mark2, f'{per2_03}')
+                    bet_siska(data)
+
+
+            if score_one + score_two > 3:
+                if try_it_over(per2_Mo,8) == 1:
+                    data = (title, *home_team_name, *away_team_name,current_score,'AVERAGE', mark2, f'{per2_Mo}')
+                    bet_siska(data)
 
 
 
-            if period == 2 and checker == 2 :
-                print("CONDITION 1 FOR SECOND PERIOD IS OK")
-                if score_one + score_two - total_1period == 0:
-                    print("CONDITION 2 FOR SECOND PERIOD IS OK ")
-                    print("<<<<<    2ND PERIOD   >>>>>")
-                    print("2ND PERIOD SCORED  HOME: ",team1_scored_2p_home,calc(team1_scored_2p_home))
-                    print("2ND PERIOD CONCED. HOME: ",team1_conceded_2p_home,calc(team1_conceded_2p_home))
-                    print("2ND PERIOD SCORED  AWAY: ",team1_scored_2p_away,calc(team1_scored_2p_away))
-                    print("2ND PERIOD CONCED. AWAY: ",team1_conceded_2p_away,calc(team1_conceded_2p_away))
-                    print("2ND PERIOD COMMON HOME : ",team1_common_2p_home,calc(team1_common_2p_home))
-                    print("2ND PERIOD COMMON AWAY : ",team1_common_2p_away,calc(team1_common_2p_away))
-                    print()
-                    print("2ND PERIOD SCORED  HOME: ", team2_scored_2p_home,calc(team2_scored_2p_home))
-                    print("2ND PERIOD CONCED. HOME: ", team2_conceded_2p_home,calc(team2_conceded_2p_home))
-                    print("2ND PERIOD SCORED  AWAY: ", team2_scored_2p_away,calc(team2_scored_2p_away))
-                    print("2ND PERIOD CONCED. AWAY: ", team2_conceded_2p_away,calc(team2_conceded_2p_away))
-                    print("2ND PERIOD COMMON HOME : ", team2_common_2p_home,calc(team2_common_2p_home))
-                    print("2ND PERIOD COMMON AWAY : ", team2_common_2p_away,calc(team2_common_2p_away))
-
-                    scorage1 = round((1 - (calc(team1_common_2p_home)[0] + calc(team1_common_2p_away)[0]) / (
-                                calc(team1_common_2p_home)[6] + calc(team1_common_2p_away)[6])) * 100, 1)
-                    scorage2 = round((1 - (calc(team2_common_2p_home)[0] + calc(team2_common_2p_away)[0]) / (
-                                calc(team2_common_2p_home)[6] + calc(team2_common_2p_away)[6])) * 100, 1)
-
-                    team1_scored_2 = round((1 - (calc(team1_scored_2p_home)[0] + calc(team1_scored_2p_away)[0]) / (
-                                calc(team1_scored_2p_home)[6] + calc(team1_scored_2p_away)[6])) * 100, 1)
-                    team1_conceded_2 = round(
-                        (1 - (calc(team1_conceded_2p_home)[0] + calc(team1_conceded_2p_away)[0]) / (
-                                calc(team1_conceded_2p_home)[6] + calc(team1_conceded_2p_away)[6])) * 100, 1)
-                    team2_scored_2 = round((1 - (calc(team2_scored_2p_home)[0] + calc(team2_scored_2p_away)[0]) / (
-                                calc(team2_scored_2p_home)[6] + calc(team2_scored_2p_away)[6])) * 100, 1)
-                    team2_conceded_2 = round(
-                        (1 - (calc(team2_conceded_2p_home)[0] + calc(team2_conceded_2p_away)[0]) / (
-                                calc(team2_conceded_2p_home)[6] + calc(team2_conceded_2p_away)[6])) * 100, 1)
-
-                    mark_team1 = f"{team1_scored_2}% to {team1_conceded_2}%"
-                    mark_team2 = f"{team2_scored_2}% to {team2_conceded_2}%"
-
-
-                    mark = f'{scorage1}% + {scorage2}%'
-                    if (score5<=2 and score8<=2) or score5 == 0 or score8 == 0:
-                        data = (title, current_score, *home_team_name,mark_team1, *away_team_name,mark_team2, "2ND PERIOD GOAL", mark)
-                        bet_siska(data)
-                        print("SECOND  PERIOD SCANNED")
-                    else:
-                        print("2nd period insufficient percantage")
-                else:
-                    print("Score was changed during 2nd period ")
-
-        except Exception:
-            print(Exception)
     finally:
 
        print("SCANNED")

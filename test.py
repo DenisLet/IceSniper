@@ -30,8 +30,10 @@ try:
                 sleep(1)
                 matches = browser.find_elements(By.CSS_SELECTOR,"[id^='g_4']")
                 for i in matches:
-                        time,score_one,score_two = handling(i)
+                        time,score_one,score_two,scoreline = handling(i) # scoreline only for 2 and 3 periods???
                         period,minute = current_moment(time)
+
+                        print("SECOND PERIOD::", scoreline[0],':',scoreline[1])
                         if period == 4:
                             continue
 
@@ -45,8 +47,18 @@ try:
                             period1_list.add(link)
                             check_link(link,time,score_one,score_two,period,minute,checker)
 
+                        if period == 2 and minute >=9 and scoreline[0]== 0 and scoreline[1] == 0:
+                            print("...........2nd period is checking...........")
+                            checker = 2
+                            link = get_link(i)
+                            if link in period2_list:
+                                print("<<<<<2nd period of match was already scanned...>>>>>")
+                                continue
+                            period2_list.add(link)
+                            check_link(link,time,score_one,score_two,period,minute,checker)
+
                 print(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-                sleep(30)
+                sleep(10)
                 refresher +=1
                 print("REFRESHER:: ", refresher)
                 if refresher % 100 == 0:

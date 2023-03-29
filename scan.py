@@ -33,6 +33,18 @@ def handling(game):
     match = game.get_attribute("innerHTML")
     soup = BeautifulSoup(match, "html.parser")
     time = soup.select_one("div.event__stage--block").text.strip().split()
+
+    coef1 = soup.select_one("div.odds__odd.event__odd--odd1").text.strip()
+    coef2 = soup.select_one("div.odds__odd.event__odd--odd3").text.strip()
+
+    def check_coef(k):
+        try:
+            float(k)
+            return True
+        except ValueError:
+            return False
+
+
     if soup.select_one("div.event__score.event__score--home").text.strip().isdigit() and \
         soup.select_one("div.event__score.event__score--away").text.strip().isdigit():
         score_one = int(soup.select_one("div.event__score.event__score--home").text.strip())
@@ -59,9 +71,19 @@ def handling(game):
 
     scoreline2_3 = (score1_2, score2_2, score1_3, score2_3)
     print("CURRENT SCORE:: ",score_one,"-",score_two)
+    print('COEF::', coef1, '::', coef2)
     if "Finished" in time or "Overtime" in time or "Penalties" in time or "Postponed" in time \
             or "Interrupted" in time  or "Awaitingupdates" in time or "Awarded" in time or 'After Penalties' in time:
         time = ["Fin","Fin"]
-    return time,score_one,score_two,scoreline2_3
+
+    if check_coef(coef1) == True and check_coef(coef2) == True:
+        k1 = float(coef1)
+        k2 = float(coef2)
+    else:
+        k1 = 0
+        k2 = 0
+
+
+    return time,score_one,score_two,scoreline2_3, k1, k2
 
 

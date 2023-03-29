@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
 from datetime import datetime
-from send import errormsg,make_mistake,startmsg
+from send import errormsg,make_mistake,startmsg,bet_siska
 
 options = webdriver.ChromeOptions()
 options.add_argument('--mute-audio')
@@ -30,7 +30,7 @@ try:
                 sleep(1)
                 matches = browser.find_elements(By.CSS_SELECTOR,"[id^='g_4']")
                 for i in matches:
-                        time,score_one,score_two,scoreline = handling(i) # scoreline only for 2 and 3 periods???
+                        time,score_one,score_two,scoreline,coef1,coef2 = handling(i) # scoreline only for 2 and 3 periods???
                         period,minute = current_moment(time)
 
                         print("SECOND PERIOD::", scoreline[0],':',scoreline[1])
@@ -57,8 +57,38 @@ try:
                             period2_list.add(link)
                             check_link(link,time,score_one,score_two,period,minute,checker)
 
+
+
+                        if  period == 3 and minute >=9 and scoreline[2]== 0 and scoreline[3] == 0:
+                            if score_one + score_two >=7:
+                                print("...........3rd period is checking...........")
+                                checker = 3
+                                link = get_link(i)
+                                if link in period3_list:
+                                    print("<<<<<3rd period of match was already scanned...>>>>>")
+                                    continue
+                                period3_list.add(link)
+                                msg = (link, '3rd Period ', 'One more goal')
+                                bet_siska(msg)
+
+
+                        if  period == 3 and minute >=9 and scoreline[2]== 0 and scoreline[3] == 0:
+                            if (coef1 <= 1.55 and score_two > score_one  and score_two - score_one <=3) or \
+                                    (coef2 <= 1.55 and score_one > score_two and score_one -score_two <=3):
+                                print("...........3rd period is checking...........")
+                                checker = 3
+                                link = get_link(i)
+                                if link in period3_list:
+                                    print("<<<<<3rd period of match was already scanned...>>>>>")
+                                    continue
+                                period3_list.add(link)
+                                msg = (link, '3rd Period ', 'One more goal')
+                                bet_siska(msg)
+
+
+
                 print(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
-                sleep(10)
+                sleep(30)
                 refresher +=1
                 print("REFRESHER:: ", refresher)
                 if refresher % 100 == 0:

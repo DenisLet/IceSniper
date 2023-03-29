@@ -698,15 +698,27 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
             if long >= 8 and data[0] == 0 and data[1] <= 1:
                 return 2
 
-        print('TRY IT OVER 0-0', try_it_over(per2_00,10))
-        print('TRY IT OVER 1-0', try_it_over(per2_10, 10))
-        print('TRY IT OVER 0-1', try_it_over(per2_01, 10))
-        print('TRY IT OVER 1-1', try_it_over(per2_11, 10))
-        print('TRY IT OVER 2-1', try_it_over(per2_21, 10))
-        print('TRY IT OVER 1-2', try_it_over(per2_12, 10))
-        print('TRY IT OVER 3-0', try_it_over(per2_30, 10))
-        print('TRY IT OVER 0-3', try_it_over(per2_03, 10))
-        print('TRY IT OVER 3++', try_it_over(per2_Mo, 10))
+
+        def alternative_attempt(data1,data2,data3,data4,data5):
+            reason1 = data1[0]+data2[0]+data3[0]+data4[0]+data5[0]
+            reason2 = data1[4]+data2[4]+data3[4]+data4[4]+data5[4]
+            if reason1<=1:
+                if reason2>=15:
+                    return True, reason1, reason2
+            return False
+
+        print('TRY IT OVER 0-0', try_it_over(per2_00,10), per2_00)
+        print('TRY IT OVER 1-0', try_it_over(per2_10, 10), per2_10)
+        print('TRY IT OVER 0-1', try_it_over(per2_01, 10), per2_01)
+        print('TRY IT OVER 1-1', try_it_over(per2_11, 10), per2_11)
+        print('TRY IT OVER 2-0', try_it_over(per2_20, 10), per2_11)
+        print('TRY IT OVER 0-2', try_it_over(per2_02, 10), per2_11)
+        print('TRY IT OVER 2-1', try_it_over(per2_21, 10), per2_21)
+        print('TRY IT OVER 1-2', try_it_over(per2_12, 10), per2_12)
+        print('TRY IT OVER 3-0', try_it_over(per2_30, 10), per2_30)
+        print('TRY IT OVER 0-3', try_it_over(per2_03, 10), per2_03)
+        print('TRY IT OVER 3++', try_it_over(per2_Mo, 10), per2_Mo)
+        print(score_one, score_two)
 
 
 
@@ -742,52 +754,6 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
         score11,score12 = calc(team2_common_3p_home)[0], calc(team2_common_3p_away)[0]
 
         nice = [0, 1]
-
-        '''Printer'''
-
-
-        # print("<<<<<    FULLTIME   >>>>>")
-        # print("SCORED   FULLTIME  HOME: ", team1_scored_ft_home, calc(team1_scored_ft_home))
-        # if calc(team1_scored_ft_home)[0] == 0:
-        #     print("$$$")
-        # print("CONCEDED FULLTIME  HOME: ", team1_conceded_ft_home, calc(team1_conceded_ft_home))
-        # if calc(team1_conceded_ft_home)[0] == 0:
-        #     print("$$$")
-        # print("SCORED   FULLTIME  AWAY: ", team1_scored_ft_away, calc(team1_scored_ft_away))
-        # if calc(team1_scored_ft_away)[0] == 0:
-        #     print("$$$")
-        # print("CONCEDED FULLTIME  AWAY: ", team1_conceded_ft_away, calc(team1_conceded_ft_away))
-        # if calc(team1_conceded_ft_away)[0] == 0:
-        #     print("$$$")
-        # print("SCORED    COMMON   HOME: ", team1_common_ft_home, calc(team1_common_ft_home))
-        # if calc(team1_common_ft_home)[0] == 0:
-        #     print("$$$")
-        # print("SCORED    COMMON   AWAY: ", team1_common_ft_away, calc(team1_common_ft_away))
-        # if calc(team1_common_ft_away)[0] == 0:
-        #     print("$$$")
-        # print("*" * 40)
-        # print("<<<<<AWAY TEAM RESULTS>>>>>", away_team_name)
-        #
-        # print("<<<<<    FULLTIME   >>>>>")
-        # print("SCORED   FULLTIME  HOME: ", team2_scored_ft_home, calc(team2_scored_ft_home))
-        # if calc(team2_scored_ft_home)[0] == 0:
-        #     print("$$$")
-        # print("CONCEDED FULLTIME  HOME: ", team2_conceded_ft_home, calc(team2_conceded_ft_home))
-        # if calc(team2_conceded_ft_home)[0] == 0:
-        #     print("$$$")
-        # print("SCORED   FULLTIME  AWAY: ", team2_scored_ft_away, calc(team2_scored_ft_away))
-        # if calc(team2_scored_ft_away)[0] == 0:
-        #     print("$$$")
-        # print("CONCEDED FULLTIME  AWAY: ", team2_conceded_ft_away, calc(team2_conceded_ft_away))
-        # if calc(team2_conceded_ft_away)[0] == 0:
-        #     print("$$$")
-        # print("SCORED    COMMON   HOME: ", team2_common_ft_home, calc(team2_common_ft_home))
-        # if calc(team2_common_ft_home)[0] == 0:
-        #     print("$$$")
-        # print("SCORED    COMMON   AWAY: ", team2_common_ft_away, calc(team2_common_ft_away))
-        # if calc(team2_common_ft_away)[0] == 0:
-        #     print("$$$")
-
 
         """    FORMING TO SEND MESSAGE   """
         current_score = f"{score_one}:{score_two}"
@@ -850,7 +816,7 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
             else:
                 print("1st period insufficient percentage")
 
-        if all_seq_team1 + all_seq_team2 > 182:
+        if all_seq_team1 + all_seq_team2 > 182 and checker == 1:
             if last0_t1+last0_t2 >=1:
                 scorage1 = round((1 - (calc(team1_common_1p_home)[0] + calc(team1_common_1p_away)[0]) / (
                             calc(team1_common_1p_home)[6] + calc(team1_common_1p_away)[6])) * 100, 1)
@@ -869,48 +835,70 @@ def check_link(url,time,score_one,score_two,period,minute,checker):
         if checker == 2 :
             if score_one == 0 and score_two == 0:
                 if try_it_over(per2_00,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_00}' )
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_00}' )
                     bet_siska(data)
 
             if score_one == 1 and score_two == 0:
                 if try_it_over(per2_10,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_10}' )
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_10}' )
                     bet_siska(data)
 
             if score_one == 0 and score_two == 1:
                 if try_it_over(per2_01,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_01}' )
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_01}' )
+                    bet_siska(data)
+
+
+            if score_one == 2 and score_two == 0:
+                if try_it_over(per2_20,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_20}' )
+                    bet_siska(data)
+
+            if score_one == 0 and score_two == 2:
+                if try_it_over(per2_02,8) == 1:
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_02}' )
                     bet_siska(data)
 
             if score_one == 1 and score_two == 1:
                 if try_it_over(per2_11,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_11}' )
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_11}' )
                     bet_siska(data)
 
             if score_one == 2 and score_two == 1:
                 if try_it_over(per2_21,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_21}' )
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_21}' )
                     bet_siska(data)
 
             if score_one == 1 and score_two == 2:
-                if try_it_over(per2_12,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_12}' )
+                if try_it_over(per2_12,8) == 1 :
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2 ' ,mark2, f'{per2_12}' )
                     bet_siska(data)
 
             if score_one == 3 and score_two == 0:
                 if try_it_over(per2_30,8) == 1:
-                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE' ,mark2, f'{per2_30}' )
+                    data = ( title, *home_team_name, *away_team_name,current_score,'AVERAGE 2' ,mark2, f'{per2_30}' )
                     bet_siska(data)
 
             if score_one == 0 and score_two == 3:
                 if try_it_over(per2_03,8) == 1:
-                    data = (title, *home_team_name, *away_team_name,current_score, 'AVERAGE', mark2, f'{per2_03}')
+                    data = (title, *home_team_name, *away_team_name,current_score, 'AVERAGE 2', mark2, f'{per2_03}')
                     bet_siska(data)
 
 
             if score_one + score_two > 3:
                 if try_it_over(per2_Mo,8) == 1:
-                    data = (title, *home_team_name, *away_team_name,current_score,'AVERAGE', mark2, f'{per2_Mo}')
+                    data = (title, *home_team_name, *away_team_name,current_score,'AVERAGE 2', mark2, f'{per2_Mo}')
+                    bet_siska(data)
+
+
+
+            if  (score_one == 1 and score_two == 2) or\
+                (score_one == 2 and score_two == 1) or \
+                (score_one == 0 and score_two == 3) or  \
+                (score_one == 3 and score_two == 0):
+                if alternative_attempt(per2_12,per2_21,per2_30,per2_03,per2_Mo)[0] == True:
+                    x1, x2 = alternative_attempt(per2_12, per2_21, per2_30, per2_03, per2_Mo)[1:]
+                    data = (title, *home_team_name, *away_team_name, current_score, 'ALTERNATIVE', mark2, f'{x1}>>{x2}')
                     bet_siska(data)
 
 

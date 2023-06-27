@@ -1,5 +1,5 @@
-token = "5655731349:AAHpSNsDXkUochVg7jtVNeFadDa2JeA9-jE"
-id = "5521639964"
+token = "XXX"
+id = "XXX"
 
 # f = (1,2,3,4)
 #
